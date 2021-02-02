@@ -5,6 +5,10 @@ services:
       - "8081:8080"
     links:
       - psql
+    depends_on:
+      - psql
+    environment:
+      - POSTGRES_PASSWORD
   psql:
     image: postgres:13.1
     ports:
@@ -12,6 +16,6 @@ services:
     environment:
       - POSTGRES_DB=orgarif
       - POSTGRES_USER=orgarif
-      - POSTGRES_PASSWORD=orgarif-test-password
+      - POSTGRES_PASSWORD
     volumes:
       - ./psql/initiate-database.sql:/docker-entrypoint-initdb.d/init.sql
