@@ -9,6 +9,8 @@ services:
       - psql
     environment:
       - POSTGRES_PASSWORD
+    networks:
+      - orgarif_net
   psql:
     image: postgres:13.1
     ports:
@@ -19,3 +21,15 @@ services:
       - POSTGRES_PASSWORD
     volumes:
       - ./psql/initiate-database.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - orgarif_net
+
+networks:
+  orgarif_net:
+    driver: bridge
+    enable_ipv6: false
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.237.1.0/24
+          gateway: 10.237.1.1
